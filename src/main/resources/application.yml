@@ -1,0 +1,30 @@
+spring:
+  shell:
+    interactive:
+      enabled: true
+  main:
+    banner-mode: off
+logging:
+  pattern:
+    console: "%m%n"
+  level:
+    com:
+      aliyun:
+        openservices:
+          tablestore:
+            service: info
+      alicloud:
+        openservices:
+          tablestore: error
+    
+    dev:
+      langchain4j:
+        model:
+          dashscope: error
+        store:
+          memory:
+            chat:
+              tablestore: info
+          embedding:
+            tablestore: info
+    root: warn

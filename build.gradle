@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.3'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.aliyun.openservices.tablestore'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+bootJar {
+    archiveFileName = "demo.jar"
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springShellVersion', "3.3.2")
+}
+
+dependencies {
+    implementation 'dev.langchain4j:langchain4j:0.35.0'
+    implementation 'dev.langchain4j:langchain4j-dashscope:0.35.0'
+    implementation 'com.aliyun.openservices:tablestore:5.17.3'
+    implementation 'dev.langchain4j:langchain4j-tablestore:0.35.0'
+    
+    // 开通tablestore服务使用
+    implementation 'com.aliyun:aliyun-java-sdk-core:4.7.1'
+    implementation 'com.aliyun:aliyun-java-sdk-ots:4.1.0'
+    
+    implementation 'dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2:0.35.0'
+    implementation 'dev.langchain4j:langchain4j-document-parser-apache-pdfbox:0.35.0'
+
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.springframework.shell:spring-shell-starter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.shell:spring-shell-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+configurations.configureEach {
+    exclude group: "commons-logging", module: "commons-logging"
+    exclude group: "org.slf4j", module: "slf4j-simple"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.shell:spring-shell-dependencies:${springShellVersion}"
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
